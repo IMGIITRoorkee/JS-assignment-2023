@@ -1,0 +1,41 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+img {
+    max-width: 100%;
+}
+
+.game-frame {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    column-gap: 10%;
+}
+
+.dice-frame {
+    border: 2px solid black;
+    width: 10vw;
+    height: 20vh;
+}
+
+.board {
+    width: 83.5vh;
+    height: 83.5vh;
+    background: url(board.jpg);
+    display: grid;
+    grid-template-rows: repeat(10, 1fr);
+    grid-template-columns: repeat(10, 1fr)
+}
+
+.cir {
+    width: 100%;
+    height: 100%;
+    transform: scale(0.7);
+    border-radius: 100%;
+    opacity: 90%;
+
+}
