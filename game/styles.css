@@ -14,18 +14,28 @@ img {
     align-items: center;
     justify-content: center;
     column-gap: 10%;
+    background-color: rgb(105, 255, 250);
+    font-family: "Poppins", sans-serif;
 }
 
 .dice-frame {
-    border: 2px solid black;
+    box-shadow: 0 15px 25px rgba(50, 50, 50, 0.15);
+    border-radius: 10px;
     width: 10vw;
-    height: 20vh;
+    height: 25vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    row-gap: 5%;
+    background-color: rgb(233, 204, 39);
 }
 
 .board {
     width: 83.5vh;
     height: 83.5vh;
-    background: url(board.jpg);
+    background: url(img/board.jpg);
+    background-repeat: no-repeat;
     display: grid;
     grid-template-rows: repeat(10, 1fr);
     grid-template-columns: repeat(10, 1fr)
@@ -37,5 +47,43 @@ img {
     transform: scale(0.7);
     border-radius: 100%;
     opacity: 90%;
+}
 
+.dice {
+    max-width: 60%;
+    margin: auto;
+}
+
+.btn {
+    background-color: #e92e3d;
+    border: none;
+    color: #ffffff;
+    padding: 10% 0;
+    width: 120px;
+    letter-spacing: 1px;
+    border-radius: 5px;
+    cursor: pointer;
+    justify-self: center;
+}
+
+@keyframes shake {
+    0% {
+        transform: rotate(8deg);
+    }
+
+    50% {
+        transform: rotate(-8deg);
+    }
+
+    100% {
+        transform: rotate(8deg);
+    }
+}
+
+.shake {
+    animation: shake 0.5s infinite;
+}
+
+.text {
+    color: green;
 }
