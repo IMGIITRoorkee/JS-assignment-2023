@@ -20,7 +20,7 @@ function setBox(id, color) {
 }
 
 function clearBox(id) {
-    document.getElementById(id).style.zIndex = -10;
+    document.getElementById(id).innerHTML = ``;
 }
 
 function modifyBox1(id) {
