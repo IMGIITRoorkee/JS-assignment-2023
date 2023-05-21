@@ -84,6 +84,14 @@ img {
     animation: shake 0.5s infinite;
 }
 
-.text {
-    color: green;
+.text1 {
+    color: black;
+}
+
+.text2{
+    color: white;
+}
+
+#frame2{
+    background-color: rgb(55, 55, 226);  
 }
