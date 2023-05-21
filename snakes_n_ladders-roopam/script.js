@@ -20,33 +20,90 @@ function setBox(id, color) {
 }
 
 function clearBox(id) {
-    document.getElementById(id).innerHTML = ``;
+    document.getElementById(id).style.zIndex = -10;
 }
+
+function modifyBox1(id) {
+    document.getElementById(id).firstChild.style.background = "rgb(12,12,181)";
+}
+
+function modifyBox2(id) {
+    document.getElementById(id).firstChild.style.background = "yellow";
+}
+
 
 var pos1 = 0;
 var pos2 = 0;
 
 function player1Mover(move) {
-    if (move > 0) {
-        setTimeout(() => {
-            if (pos1 >= 1) { clearBox("b_" + pos1); }
-            pos1++;
-            setBox("b_" + pos1, "yellow");
-            move--;
-            player1Mover(move)
-        }, 300)
-    }
+    setTimeout(() => {
+        if (pos1 + move > 100) return;
+        if (pos1 >= 1) {
+            if (pos1 == pos2) { modifyBox1("b_" + pos1); }
+            else { clearBox("b_" + pos1); }
+        }
+        pos1 += move;
+        setBox("b_" + pos1, "yellow");
+        check_ladder1();
+        check_snake1();
+        check_winner1();
+    }, 1000)
+
 }
 
 function player2Mover(move) {
-    if (move > 0) {
-        setTimeout(() => {
-            if (pos2 >= 1) { clearBox("b_" + pos2); }
-            pos2++;
-            setBox("b_" + pos2, "rgb(12,12,181)");
-            move--;
-            player2Mover(move)
-        }, 300)
+    setTimeout(() => {
+        if (pos2 + move > 100) return;
+        if (pos2 >= 1) {
+            if (pos1 == pos2) { modifyBox2("b_" + pos2); }
+            else { clearBox("b_" + pos2); }
+        }
+        pos2 += move;
+        setBox("b_" + pos2, "rgb(12,12,181)");
+        check_ladder2();
+        check_snake2();
+        check_winner2();
+    }, 1000)
+}
+
+
+//ladders and snakes:
+var ladders = [[1, 38], [4, 14], [9, 31], [21, 42], [28, 84], [51, 67], [71, 91], [80, 100]];
+var snakes = [[17, 7], [54, 34], [62, 19], [64, 60], [87, 24], [93, 73], [95, 75], [98, 79]];
+
+function check_ladder1() {
+    for (let i = 0; i < ladders.length; i++) {
+        if (ladders[i][0] == pos1) {
+            player1Mover(ladders[i][1] - ladders[i][0]);
+            break;
+        }
+    }
+}
+
+function check_ladder2() {
+    for (let i = 0; i < ladders.length; i++) {
+        if (ladders[i][0] == pos2) {
+            player2Mover(ladders[i][1] - ladders[i][0]);
+            break;
+        }
+    }
+}
+
+function check_snake1() {
+    for (let i = 0; i < snakes.length; i++) {
+        if (snakes[i][0] == pos1) {
+            player1Mover(snakes[i][1] - snakes[i][0]);
+            break;
+        }
+    }
+}
+
+function check_snake2() {
+    for (let i = 0; i < snakes.length; i++) {
+        if (snakes[i][0] == pos2) {
+            player2Mover(snakes[i][1] - snakes[i][0]);
+            break;
+        }
     }
 }
 
@@ -63,8 +120,7 @@ function roll1(id) {
     setTimeout(function () {
         die.classList.remove("shake");
         die.setAttribute('src', images[dieVal1]);
-        let step1 = dieVal1 + 1;
-        player1Mover(step1);
+        player1Mover(dieVal1 + 1);
     }, 500)
 }
 
@@ -75,7 +131,19 @@ function roll2(id) {
     setTimeout(function () {
         die.classList.remove("shake");
         die.setAttribute('src', images[dieVal2]);
-        let step2 = dieVal2 + 1;
-        player2Mover(step2);
+        player2Mover(dieVal2 + 1);
     }, 500)
+}
+
+//check winner:
+function check_winner1() {
+    if (pos1 == 100) {
+        alert("Player 1 is the winner!");
+    }
+}
+
+function check_winner2() {
+    if (pos2 == 100) {
+        alert("Player 2 is the winner!");
+    }
 }
