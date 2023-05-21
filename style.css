@@ -1,0 +1,45 @@
+*
+{
+    margin: 0px;
+    padding: 0px;
+}
+img
+{
+    display: none;
+}
+#ui
+{
+    display: flex;
+    justify-content: space-between;
+    height : 10%;
+}
+#retry
+{
+    border : 1px solid black;
+    width : 15%;
+}
+#retry-button
+{
+    display: block;
+    width : 100%;
+    padding : 1rem;
+    font-size: 1.5rem;
+}
+#score-section
+{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width : 15%;
+    border: 1px solid black;
+}
+#main-canvas
+{
+    width : 100%;
+    height : 80%;
+    position: absolute;
+    top : 50%;
+    left : 50%;
+    transform: translate(-50%, -50%);
+    border : 1px solid black;
+}
