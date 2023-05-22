@@ -138,14 +138,18 @@ function roll2(id) {
 //check winner:
 function check_winner1() {
     if (pos1 == 100) {
-        alert("Player 1 is the winner!");
-        location.reload();
+        setTimeout(() => {
+            alert("Player 1 is the winner!");
+            location.reload();
+        }, 500)
     }
 }
 
 function check_winner2() {
     if (pos2 == 100) {
-        alert("Player 2 is the winner!");
-        location.reload();
+        setTimeout(() => {
+            alert("Player 2 is the winner!");
+            location.reload();
+        }, 500)
     }
 }
