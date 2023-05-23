@@ -107,6 +107,43 @@ img {
     background-color: rgb(55, 55, 226);
 }
 
+.btn-dis {
+    background-color: #e3848cfe;
+}
+
+.msg-box {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    height: 20vh;
+    width: 40vh;
+    font-size: 18px;
+    padding: 0% 2%;
+    background-color: yellow;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 15px 15px #00000044;
+    border-radius: 5px;
+    row-gap: 7%;
+}
+
+.ok-btn {
+    align-self: flex-end;
+    padding: 1% 2%;
+    cursor: pointer;
+}
+
+#pl1 {
+    display: none;
+}
+
+#pl2 {
+    display: none;
+    color: white;
+    background-color: rgb(55, 55, 226);
+}
+
+
 @media only screen and (max-width : 1175px) {
     .game-frame {
         column-gap: 5%;
@@ -118,6 +155,10 @@ img {
         width: 12vw;
         height: 18vw;
     }
+
+    .msg-box {
+        font-size: 15px;
+    }
 }
 
 @media only screen and (max-width : 850px) {
@@ -127,5 +168,11 @@ img {
         display: none;
     }
 
-    .dice-frame{justify-content: center;}
+    .dice-frame {
+        justify-content: center;
+    }
+
+    .msg-box {
+        font-size: 13px;
+    }
 }

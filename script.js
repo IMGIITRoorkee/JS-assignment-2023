@@ -121,6 +121,13 @@ function roll1(id) {
         die.classList.remove("shake");
         die.setAttribute('src', images[dieVal1]);
         player1Mover(dieVal1 + 1);
+
+        if (dieVal1 != 5) {
+            document.querySelector('#btn1').disabled = true;
+            document.querySelector('#btn1').classList.add('btn-dis');
+            document.querySelector('#btn2').disabled = false;
+            document.querySelector('#btn2').classList.remove('btn-dis');
+        }
     }, 500)
 }
 
@@ -132,6 +139,13 @@ function roll2(id) {
         die.classList.remove("shake");
         die.setAttribute('src', images[dieVal2]);
         player2Mover(dieVal2 + 1);
+
+        if (dieVal2 != 5) {
+            document.querySelector('#btn2').disabled = true;
+            document.querySelector('#btn2').classList.add('btn-dis');
+            document.querySelector('#btn1').disabled = false;
+            document.querySelector('#btn1').classList.remove('btn-dis');
+        }
     }, 500)
 }
 
@@ -139,8 +153,7 @@ function roll2(id) {
 function check_winner1() {
     if (pos1 == 100) {
         setTimeout(() => {
-            alert("Player 1 is the winner!");
-            location.reload();
+            document.getElementById('pl1').style.display = 'flex';
         }, 500)
     }
 }
@@ -148,8 +161,26 @@ function check_winner1() {
 function check_winner2() {
     if (pos2 == 100) {
         setTimeout(() => {
-            alert("Player 2 is the winner!");
-            location.reload();
+            document.getElementById('pl2').style.display = 'flex';
         }, 500)
     }
+}
+
+const buttons = document.querySelectorAll('.ok-btn');
+buttons.forEach(btn => {
+    btn.addEventListener('click', () => {
+        if (document.getElementById('pl2').style.display != 'none')
+            document.getElementById('pl2').style.display = 'none';
+        if (document.getElementById('pl1').style.display != 'none')
+            document.getElementById('pl1').style.display = 'none';
+        location.reload();
+    })
+});
+
+function test1() {
+    document.getElementById('pl1').style.display = 'flex';
+}
+
+function test2() {
+    document.getElementById('pl2').style.display = 'flex';
 }
