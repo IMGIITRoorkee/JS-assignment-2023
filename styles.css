@@ -143,6 +143,22 @@ img {
     background-color: rgb(55, 55, 226);
 }
 
+.switch {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: 2%;
+    left: 2%;
+}
+
+.switch-btn {
+    background-color: rgb(200, 200, 200);
+    border: none;
+    padding: 5% 4%;
+    border-radius: 5px;
+    cursor: pointer;
+}
 
 @media only screen and (max-width : 1175px) {
     .game-frame {
@@ -174,5 +190,11 @@ img {
 
     .msg-box {
         font-size: 13px;
+    }
+}
+
+@media only screen and (max-height : 300px) {
+    .switch-btn {
+        font-size: 11px;
     }
 }

@@ -128,10 +128,10 @@ function roll1(id) {
             document.querySelector('#btn2').disabled = false;
             document.querySelector('#btn2').classList.remove('btn-dis');
         }
-        else if (pos2 == 0) {
-            document.querySelector('#btn2').disabled = true;
-            document.querySelector('#btn2').classList.add('btn-dis');
-        }
+        // else if (pos2 == 0) {
+        //     document.querySelector('#btn2').disabled = true;
+        //     document.querySelector('#btn2').classList.add('btn-dis');
+        // }
     }, 500)
 }
 
@@ -150,10 +150,10 @@ function roll2(id) {
             document.querySelector('#btn1').disabled = false;
             document.querySelector('#btn1').classList.remove('btn-dis');
         }
-        else if (pos1 == 0) {
-            document.querySelector('#btn1').disabled = true;
-            document.querySelector('#btn1').classList.add('btn-dis');
-        }
+        // else if (pos1 == 0) {
+        //     document.querySelector('#btn1').disabled = true;
+        //     document.querySelector('#btn1').classList.add('btn-dis');
+        // }
     }, 500)
 }
 
@@ -193,11 +193,13 @@ function test2() {
     document.getElementById('pl2').style.display = 'flex';
 }
 
-//Testing code :
-// setTimeout(() => {
-//     roll1('#dice-01')
-// }, 500)
-// setInterval(() => {
-//     if (document.querySelector('#btn1').disabled == false) roll1('#dice-01');
-//     else if (document.querySelector('#btn2').disabled == false) roll2('#dice-02');
-// }, 2000)
+//Computer
+
+function comp_control() {
+    setInterval(() => {
+        if (document.querySelector('#btn2').disabled == false && pos1 != 100 && pos2 != 100)
+            roll2('#dice-02');
+    }, 4000)
+}
+
+comp_control();
