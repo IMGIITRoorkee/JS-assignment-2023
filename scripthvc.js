@@ -23,12 +23,16 @@ function clearBox(id) {
     document.getElementById(id).innerHTML = ``;
 }
 
-function modifyBox1(id) {
-    document.getElementById(id).firstChild.style.background = "rgb(12,12,181)";
-}
+// function modifyBox1(id) {
+//     document.getElementById(id).innerHTML = `<div class ="cir" style = "background:rgb(12,12,181)"></div>`
+// }
 
-function modifyBox2(id) {
-    document.getElementById(id).firstChild.style.background = "yellow";
+// function modifyBox2(id) {
+//     document.getElementById(id).innerHTML = `<div class ="cir" style = "background:yellow"></div>`
+// }
+
+function bothBox(id) {
+    document.getElementById(id).innerHTML = `<div class ="cir_both" style = "background:yellow"></div><div class ="cir_both" style = "background:rgb(12,12,181)"></div>`
 }
 
 
@@ -39,11 +43,12 @@ function player1Mover(move) {
     setTimeout(() => {
         if (pos1 + move > 100) return;
         if (pos1 >= 1) {
-            if (pos1 == pos2) { modifyBox1("b_" + pos1); }
+            if (pos1 == pos2) { setBox("b_" + pos1, "rgb(12,12,181)"); }
             else { clearBox("b_" + pos1); }
         }
         pos1 += move;
-        setBox("b_" + pos1, "yellow");
+        if (pos1 == pos2) { bothBox("b_" + pos1); }
+        else { setBox("b_" + pos1, "yellow"); }
         check_ladder1();
         check_snake1();
         check_winner1();
@@ -55,11 +60,12 @@ function player2Mover(move) {
     setTimeout(() => {
         if (pos2 + move > 100) return;
         if (pos2 >= 1) {
-            if (pos1 == pos2) { modifyBox2("b_" + pos2); }
+            if (pos1 == pos2) { setBox("b_" + pos2, "yellow"); }
             else { clearBox("b_" + pos2); }
         }
         pos2 += move;
-        setBox("b_" + pos2, "rgb(12,12,181)");
+        if (pos1 == pos2) { bothBox("b_" + pos2); }
+        else { setBox("b_" + pos2, "rgb(12,12,181)"); }
         check_ladder2();
         check_snake2();
         check_winner2();
