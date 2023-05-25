@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Play&display=swap"
+      rel="stylesheet"
+    />
+    <script src="script.js" defer></script>
+    <title>Survive!</title>
+  </head>
+  <body>
+    <!-- Start menu -->
+    <div id="start-screen" class="screen">
+      <div class="container">
+        <div class="title">GENERIC TITLE</div>
+        <div class="button-section">
+        <div class="play">
+            <button id="play-button">PLAY</button>
+        </div>
+        </div>
+        <div class="instructions">
+          <p>MOVEMENT : W A S D</p>
+          <p>SHOOT : K</p>
+        </div>
+    </div>
+    </div>
+    <!-- Actual game screen -->
+    <div class="screen" id="game-area">
+    <div id="ui">
+      <div id="score-section">
+        <p>SCORE :</p>
+        <p id="actual-score">0</p>
+      </div>
+    </div>
+    <canvas id="main-canvas"></canvas>
+    <img src="/images/1.png" alt="" class="background-image" />
+    <img src="/images/2.png" alt="" class="background-image" />
+    <img src="/images/3.png" alt="" class="background-image" />
+    <img src="/images/4.png" alt="" class="background-image" />
+    <img src="/images/rocket.png" alt="" id="player-image" />
+    <img src="/images/black-rocket.png" alt="" id="enemy-image" />
+    <img src="/images/bullet.svg" alt="" id="bullet" />
+    <img src="/images/shroom-smol.png" alt="" id="invincible" />
+    <img src="/images/final-bolt.png" alt="" id="speed-up">
+    <img src="/images/final-death-image.png" alt="" id="enemy-image-death" />
+    <img src="/images/white-rocket.png" alt="" id="invincible-player">
+    <audio src="audio/actual-bgm.wav" id="bgm"></audio>
+    <audio src="audio/enemy-death.wav" id="enemy-death"></audio>
+    <audio src="audio/player-death.wav" id="player-death"></audio>
+    </div>
+    <!-- Game over menu, can only navigate back to game -->
+    <div class="screen" id="game-over">
+      <div class="container">
+        <div class="title">GAME OVER!</div>
+        <div class="button-section">
+        <div class="play">
+            <button id="retry-button">TRY AGAIN</button>
+            <button id="main-menu-button">BACK TO MAIN MENU</button>
+        </div>
+        </div>
+    </div>
+    </div>
+  </body>
+</html>
