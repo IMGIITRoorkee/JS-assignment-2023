@@ -168,7 +168,7 @@ function check_winner1() {
     if (pos1 == 100) {
         setTimeout(() => {
             document.getElementById('pl1').style.display = 'flex';
-        }, 500)
+        }, 1000)
     }
 }
 
@@ -176,7 +176,7 @@ function check_winner2() {
     if (pos2 == 100) {
         setTimeout(() => {
             document.getElementById('pl2').style.display = 'flex';
-        }, 500)
+        }, 1000)
     }
 }
 
@@ -191,13 +191,13 @@ buttons.forEach(btn => {
     })
 });
 
-function test1() {
-    document.getElementById('pl1').style.display = 'flex';
-}
+// function test1() {
+//     document.getElementById('pl1').style.display = 'flex';
+// }
 
-function test2() {
-    document.getElementById('pl2').style.display = 'flex';
-}
+// function test2() {
+//     document.getElementById('pl2').style.display = 'flex';
+// }
 
 //Testing code :
 // setTimeout(() => {

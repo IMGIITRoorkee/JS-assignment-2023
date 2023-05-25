@@ -23,14 +23,6 @@ function clearBox(id) {
     document.getElementById(id).innerHTML = ``;
 }
 
-// function modifyBox1(id) {
-//     document.getElementById(id).innerHTML = `<div class ="cir" style = "background:rgb(12,12,181)"></div>`
-// }
-
-// function modifyBox2(id) {
-//     document.getElementById(id).innerHTML = `<div class ="cir" style = "background:yellow"></div>`
-// }
-
 function bothBox(id) {
     document.getElementById(id).innerHTML = `<div class ="cir_both" style = "background:yellow"></div><div class ="cir_both" style = "background:rgb(12,12,181)"></div>`
 }
@@ -117,7 +109,6 @@ function check_snake2() {
 let images = ["img/dice-01.svg", "img/dice-02.svg", "img/dice-03.svg", "img/dice-04.svg", "img/dice-05.svg", "img/dice-06.svg"];
 
 document.querySelector('#btn1').addEventListener('click', () => { roll1('#dice-01') });
-document.querySelector('#btn2').addEventListener('click', () => { roll2('#dice-02') });
 
 function roll1(id) {
     let die = document.querySelector(id);
@@ -133,11 +124,9 @@ function roll1(id) {
             document.querySelector('#btn1').classList.add('btn-dis');
             document.querySelector('#btn2').disabled = false;
             document.querySelector('#btn2').classList.remove('btn-dis');
+            comp_control();
         }
-        // else if (pos2 == 0) {
-        //     document.querySelector('#btn2').disabled = true;
-        //     document.querySelector('#btn2').classList.add('btn-dis');
-        // }
+
     }, 500)
 }
 
@@ -156,19 +145,17 @@ function roll2(id) {
             document.querySelector('#btn1').disabled = false;
             document.querySelector('#btn1').classList.remove('btn-dis');
         }
-        // else if (pos1 == 0) {
-        //     document.querySelector('#btn1').disabled = true;
-        //     document.querySelector('#btn1').classList.add('btn-dis');
-        // }
+        else { comp_control(); }
     }, 500)
 }
 
 //check winner:
+
 function check_winner1() {
     if (pos1 == 100) {
         setTimeout(() => {
             document.getElementById('pl1').style.display = 'flex';
-        }, 500)
+        }, 1000)
     }
 }
 
@@ -176,7 +163,7 @@ function check_winner2() {
     if (pos2 == 100) {
         setTimeout(() => {
             document.getElementById('pl2').style.display = 'flex';
-        }, 500)
+        }, 1000)
     }
 }
 
@@ -191,21 +178,11 @@ buttons.forEach(btn => {
     })
 });
 
-function test1() {
-    document.getElementById('pl1').style.display = 'flex';
-}
-
-function test2() {
-    document.getElementById('pl2').style.display = 'flex';
-}
-
 //Computer
 
 function comp_control() {
-    setInterval(() => {
-        if (document.querySelector('#btn2').disabled == false && pos1 != 100 && pos2 != 100)
+    setTimeout(() => {
+        if (pos1 != 100 && pos2 != 100)
             roll2('#dice-02');
     }, 4000)
 }
-
-comp_control();
