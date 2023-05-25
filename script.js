@@ -266,7 +266,7 @@ class BulletManager {
           //enemy death
           enemy.die();
           if (enemy.rate > 0.2 && enemy.rate < 0.6) {
-            pickupManager.generatePickup(enemy.x, enemy.y);
+            pickupManager.generatePickup(enemy.x, enemy.y, player);
           }
           sleep(100).then(() => {
             currentEnemies.splice(currentEnemies.indexOf(enemy), 1);
@@ -322,9 +322,9 @@ class PickupManager {
       }
     });
   }
-  generatePickup(parentX, parentY) {
+  generatePickup(parentX, parentY, player) {
     let seed = Math.random();
-    if (seed > 0 && seed < 0.3) {
+    if (seed > 0 && seed < 0.3 && !player.isInvincible) {
       this.currentPickups.push(
         new Pickup(
           parentX,
