@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Circle Ninja</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class = "bgs">
+        <h1 class = "head">CubeNinja</h1>
+        <center>
+            <div class = "wrapper">
+                <button class = "start-game"><p class = "button-text">Start the Game</p>
+                <button class = "button_i">Instructions</button>
+            </div>
+        </center>
+        
+       
+        <pre class = "instructions" hidden = "hidden">Instructions:
+            1. After clicking start, randomly cubes will be projected on to the screen.
+            2. Using your touchpad/mouse, you should try to cut the cubes. If the cube is cut, itll change it's color to red.
+            3. If any cube that is not cut goes below the screen, the game ends.
+        </pre>
+    </div>
+    <div class = "game-canvas" hidden = "hidden">
+        <button class = "end-game">End Game</button>
+       <center><p class = "score">Score : </p></center>
+        
+        <canvas id="canvas" width="2000" height="500"></canvas>
+    </div>
+    <div class = "game-end" hidden = "hidden">
+        <p>GameFinished</p>
+        <p class = "final-score">Your score was: </p>
+        <p class = "redirect-text">Youll be redirected to the home screen after secs.</p>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
