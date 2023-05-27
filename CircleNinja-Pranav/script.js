@@ -240,9 +240,9 @@ function stopDragLine(){
         //mx0-y0+c/rt(m^2+1)
         function lineCheck(x,y,r){
             let distance = (m*x-y+c)/Math.sqrt(m*m + 1);
-            // console.log(`Distance is : ${distance}`);
-            // console.log(`Radius is ${r}`);
-            if(Math.abs(distance) < 1.2*r){
+            console.log(`Distance is : ${distance}`);
+            console.log(`Radius is ${r}`);
+            if(Math.abs(distance) <= 1.7*r){
                 indi_cube.classList.add("cut");
                 score++;
                 let y = document.getElementsByClassName("final-score")[0];
