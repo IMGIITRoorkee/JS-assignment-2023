@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game</title>
+    <link rel="stylesheet" href="index.css">
+    <script src="index.js"></script>
+</head>
+<body>
+    <div id="one">
+      
+    </div>
+    <div id="gameloss">SORRY!!YOU GUESSED THE WRONG MOVIE...</div>
+    <div id="guess"><button type="button" id="nextbtn" onclick="next()">GUESS NEXT MOVIE</button></div>
+    <div class="score">
+        <p>Score:</p>
+        <p id="point">0</p>
+    </div>
+    <div id="what">
+        <div id="ctext">
+             <p>CORRECT CONSONANTS</p>
+             <div id="correct"></div>
+        </div>
+        <div id="wtext">
+             <p>WRONG CONSONANTS</p>
+             <div id="wrong"></div>
+        </div>
+    </div>
+    <div id="gh">
+       <p id="hintext">ENTER ANY CONSONANT</p>
+       <p id="chances"></p>
+       <form id="hint" onsubmit="event.preventDefault()">
+            <input type="text"  name="index">
+            <button type="submit" id="subbtn" onclick="hint()">GO</button>
+       </form>
+    </div>
+    <div id="complete">
+    <form id="complete" onsubmit="event.preventDefault()">
+            <input class="movie" type="text" name="movie">
+            <button type="submit" id="moviebtn" onclick="validateForm()">GO</button>
+    </form>
+    </div>
+
+</body>
+</html>
