@@ -179,18 +179,36 @@ function init() {
 
 let num = Math.random() * 4;
 var game_end = 0;
-function gameEndCheck() {
-    for(let i = 0; i < count1; i ++){
-        if(!cube[i].classList.contains("cut")){
-            game_end = 1;
-            // alert("Game finished");
-            let gameEnd = document.getElementsByClassName("game-end")[0];
-            gameEnd.removeAttribute("hidden");
-            let gameArea = document.getElementsByClassName("game-canvas")[0];
-            gameArea.setAttribute("hidden" , "hidden");
-        }
-    }
+// function gameEndCheck() {
+//     for(let i = 0; i < count1; i ++){
+//         if(!cube[i].classList.contains("cut")){
+//             game_end = 1;
+//             // alert("Game finished");
+//             let gameEnd = document.getElementsByClassName("game-end")[0];
+//             gameEnd.removeAttribute("hidden");
+//             let gameArea = document.getElementsByClassName("game-canvas")[0];
+//             gameArea.setAttribute("hidden" , "hidden");
+//         }
+//     }
     
+// }
+
+function gameEndCheck(){
+    for(let i = 1; i < count; i ++){
+        let indi_cube = document.getElementsByClassName(`cube-${i}`)[0];
+        indi_cube.addEventListener("animationend" , () =>{
+            if(!indi_cube.classList.contains("cut")){
+                game_end = 1;
+                // alert("Game finished");
+                let gameEnd = document.getElementsByClassName("game-end")[0];
+                gameEnd.removeAttribute("hidden");
+                let gameArea = document.getElementsByClassName("game-canvas")[0];
+                gameArea.setAttribute("hidden" , "hidden");
+            }
+        })
+        
+
+    }
 }
 
 
@@ -203,7 +221,7 @@ function startDragLine(e) {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         ctx.beginPath();
         ctx.moveTo(firstClick[0], firstClick[1]);
-        ctx.lineTo(cursorX, cursorY, 6);
+        ctx.quadraticCurveTo(cursorX, cursorY, cursorX - 60 , cursorY - 60);
         ctx.strokeStyle = '#000000';
         ctx.stroke();
     },10);
@@ -254,18 +272,43 @@ function stopDragLine(){
                 x.innerHTML = `Score : ${score}`;
             }
         }
-        lineCheck(cx,cy,r);
+        
+        // lineCheck(cx,cy,r);
         
        
 }
 
 
 
+function betterCollisionCheck(){
+    for(let i = 1; i < count; i ++){
+        let indi_cube = document.getElementsByClassName(`cube-${i}`)[0];
+        if((firstClick[1] < indi_cube.offsetTop) && (indi_cube.offsetTop < cursorY) && (firstClick[0] < indi_cube.offsetLeft ) && (indi_cube.offsetLeft < cursorX)){
+            console.log("HIT");
+            indi_cube.classList.add("cut");
+            score+= 1;
+            let y = document.getElementsByClassName("final-score")[0];
+            y.ondragstart = function () {
+                return false;
+            }
+            y.innerHTML = `Your score was ${score}`;
+            let x = document.getElementsByClassName("score")[0];
+            x.innerHTML = `Score : ${score}`;
+        }
 
 
+    }
+    
+}
 
 
-
+setInterval(() => {
+    try {
+        betterCollisionCheck();
+    } catch (error) {
+        console.log(error);
+    }
+} , 1);
 
 
 // Use the e.screenX and e.screenY to automatically trigger the mouseup event (i.e fire that corresponding fn.. otherwise leads to bugs)
