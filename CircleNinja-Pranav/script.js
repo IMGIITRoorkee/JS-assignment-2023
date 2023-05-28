@@ -206,6 +206,7 @@ function init() {
     let mouseX = 0;
     let mouseY = 0;
 let isMouseDown = false;
+ctx.clearRect(0, 0, canvas.width, canvas.height);
 canvas.addEventListener('mousedown', (event) => {
   isMouseDown = true;
   mouseX = event.pageX - canvas.offsetLeft;
@@ -454,6 +455,7 @@ start_game_again.addEventListener("click" , () => {
     catch(e){
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         setTimeout(() => {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
             start_game();
         } , 10);
         
