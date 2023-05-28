@@ -33,6 +33,7 @@ function start_game() {
             } , 3000);
         } , 2000);
 
+
     
         
  
@@ -71,7 +72,7 @@ function end_game() {
 
 var count = 0;
 
-
+var cube_circle = Math.random();
 
 function createCube() {
     count++;
@@ -79,7 +80,12 @@ function createCube() {
     let x = document.createElement("div");
     let game_area = document.getElementsByClassName("game-canvas")[0];
     x.className = `cube-${count} cube`;
-   
+    if(cube_circle >= 0.5){
+        x.style.borderRadius = "100%";
+    }
+    else{
+        x.style.borderRadius = "0%";
+    }
     let position_left = Math.random() * 1000;
     x.style.setProperty("--my-start-left" , (position_left + "px"));
     x.style.setProperty("--my-middle-left" , (position_left + 200 + "px"));
@@ -101,11 +107,11 @@ function createCube() {
 //     }
 // }
 let cube = document.getElementsByClassName("cube");
-
+var cube_generate;
 function generateCubes(){
     
     
-        setInterval(() => {
+        cube_generate = setInterval(() => {
             createCube();
             destroyCube();
             // cubeHider();
@@ -157,24 +163,83 @@ for(let i = 0; i < cube.length; i ++){
     }
 }
 
+function gameEndCheck(){
+    for(let i = 1; i < count; i ++){
+        let indi_cube = document.getElementsByClassName(`cube-${i}`)[0];
+        indi_cube.addEventListener("animationend" , () =>{
+            if(!indi_cube.classList.contains("cut")){
+                game_end = 1;
+                // alert("Game finished");
+                let gameEnd = document.getElementsByClassName("game-end")[0];
+                gameEnd.removeAttribute("hidden");
+                let gameArea = document.getElementsByClassName("game-canvas")[0];
+                gameArea.setAttribute("hidden" , "hidden");
+                try{
+                    clearInterval(cube_generate);
+                }
+                catch (error){
+                    console.log(error);
+                }
+            }
+        })
+        
+
+    }
+}
 
 
 function init() {
-    document.onmousemove = function(e){
-        cursorX = e.pageX;
-        cursorY = e.pageY;
-    };
-    // console.log("X is " + cursorX);
-    // console.log("Y is : " + cursorY);
-    // if(cursorY < 60){
-    //     stopDragLine();
-    // }
-    // else if(cursorX > 800){
-    //     stopDragLine();
-    // }
-    canvas.addEventListener('mousedown', startDragLine, false);
-    canvas.addEventListener('mouseup', stopDragLine, false);
-   
+    // document.onmousemove = function(e){
+    //     cursorX = e.pageX;
+    //     cursorY = e.pageY;
+    // };
+    // // console.log("X is " + cursorX);
+    // // console.log("Y is : " + cursorY);
+    // // if(cursorY < 60){
+    // //     stopDragLine();
+    // // }
+    // // else if(cursorX > 800){
+    // //     stopDragLine();
+    // // }
+    // canvas.addEventListener('mousedown', startDragLine, false);
+    // canvas.addEventListener('mouseup', stopDragLine, false);
+    let mouseX = 0;
+    let mouseY = 0;
+let isMouseDown = false;
+canvas.addEventListener('mousedown', (event) => {
+  isMouseDown = true;
+  mouseX = event.pageX - canvas.offsetLeft;
+  mouseY = event.pageY - canvas.offsetTop;
+  ctx.beginPath();
+  ctx.moveTo(mouseX, mouseY); //go to initial
+});
+
+canvas.addEventListener('mousemove', (event) => {
+  if (isMouseDown) {
+    //current pos
+    const currentX = event.pageX - canvas.offsetLeft;
+    const currentY = event.pageY - canvas.offsetTop;
+    
+// control points for curve, took ref from docs + overflow
+    const controlX = (currentX + mouseX) / 2;
+    const controlY = (currentY + mouseY) / 2;
+    ctx.quadraticCurveTo(mouseX, mouseY, controlX, controlY);
+    mouseX = currentX;
+    mouseY = currentY;
+    ctx.stroke();
+
+    
+  }
+
+});
+
+canvas.addEventListener('mouseup', () => {
+    // betterCollisionCheck();
+  isMouseDown = false;
+  ctx.clearRect(0, 0, canvas.width, canvas.height); // clear path
+});
+
+
 }
 
 let num = Math.random() * 4;
@@ -193,23 +258,7 @@ var game_end = 0;
     
 // }
 
-function gameEndCheck(){
-    for(let i = 1; i < count; i ++){
-        let indi_cube = document.getElementsByClassName(`cube-${i}`)[0];
-        indi_cube.addEventListener("animationend" , () =>{
-            if(!indi_cube.classList.contains("cut")){
-                game_end = 1;
-                // alert("Game finished");
-                let gameEnd = document.getElementsByClassName("game-end")[0];
-                gameEnd.removeAttribute("hidden");
-                let gameArea = document.getElementsByClassName("game-canvas")[0];
-                gameArea.setAttribute("hidden" , "hidden");
-            }
-        })
-        
 
-    }
-}
 
 
 
@@ -229,6 +278,7 @@ function startDragLine(e) {
     audio.play();
 }
 var count1 = 0;
+
 function stopDragLine(){
     count1++;
     clearInterval(intervalLoop);
@@ -261,6 +311,7 @@ function stopDragLine(){
             console.log(`Distance is : ${distance}`);
             console.log(`Radius is ${r}`);
             if(Math.abs(distance) <= 1.7*r){
+               
                 indi_cube.classList.add("cut");
                 score++;
                 let y = document.getElementsByClassName("final-score")[0];
@@ -274,6 +325,8 @@ function stopDragLine(){
         }
         
         // lineCheck(cx,cy,r);
+        // betterCollisionCheck();
+    }   
         
        
 }
@@ -283,32 +336,28 @@ function stopDragLine(){
 function betterCollisionCheck(){
     for(let i = 1; i < count; i ++){
         let indi_cube = document.getElementsByClassName(`cube-${i}`)[0];
-        if((firstClick[1] < indi_cube.offsetTop) && (indi_cube.offsetTop < cursorY) && (firstClick[0] < indi_cube.offsetLeft ) && (indi_cube.offsetLeft < cursorX)){
-            console.log("HIT");
-            indi_cube.classList.add("cut");
-            score+= 1;
-            let y = document.getElementsByClassName("final-score")[0];
-            y.ondragstart = function () {
-                return false;
-            }
-            y.innerHTML = `Your score was ${score}`;
-            let x = document.getElementsByClassName("score")[0];
-            x.innerHTML = `Score : ${score}`;
+       
+       indi_cube.addEventListener("mouseover" , () => {
+        console.log("HIT");
+        indi_cube.classList.add("cut");
+        score+= 1;
+        let y = document.getElementsByClassName("final-score")[0];
+        y.ondragstart = function () {
+            return false;
+        }
+        y.innerHTML = `Your score was ${score}`;
+        let x = document.getElementsByClassName("score")[0];
+        x.innerHTML = `Score : ${score}`;
+       })
+            
         }
 
-
-    }
+    }     
     
-}
+// }
 
 
-setInterval(() => {
-    try {
-        betterCollisionCheck();
-    } catch (error) {
-        console.log(error);
-    }
-} , 1);
+
 
 
 // Use the e.screenX and e.screenY to automatically trigger the mouseup event (i.e fire that corresponding fn.. otherwise leads to bugs)
@@ -316,7 +365,6 @@ setInterval(() => {
 
 
 
-}
 
 function destroyCube(){
     for(let i = 1; i < count; i ++){
@@ -367,29 +415,47 @@ x.addEventListener("click" , () => {
     location.reload();
 })
 
+function destoryCubeRemove(){
+    console.log(cube);
+    for(let i = 0; i < cube.length; i ++){
+        let x = document.getElementsByClassName(`cube`)[i];
+        try {
+            x.remove();
+            // console.log(cube);
+        } catch (error) {
+            x.classList.remove(`cube cube-${i}`)
+            console.log("Cube was already removed!");
+        }
+    }
+    cube[0].remove();
+    cube[0].remove();
+}
 let start_game_again = document.getElementsByClassName("start-game-again")[0];
 start_game_again.addEventListener("click" , () => {
-    start_game();
+   
     try{    
-        destroyCube();
+       
         // let x = document.getElementsByClassName("game-end")[0];
         // x.setAttribute("hidden" , "hidden");
         // let y = document.getElementsByClassName("game-canvas")[0];
         // y.removeAttribute("hidden");
         // destroyCube();
-        // start_game();
-        destroyCube();
+        
+        count = 0;
+        count1 = 0;
+        destoryCubeRemove();
         stopDragLine();
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-       setTimeout(() => {
-        start_game();
-       } , 3000);
+    //    setTimeout(() => {
+    //     start_game();
+    //    } , 3000);
+    start_game();
     }
     catch(e){
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         setTimeout(() => {
             start_game();
-        } , 2000);
+        } , 10);
         
     }
     
