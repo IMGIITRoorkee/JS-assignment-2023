@@ -1,6 +1,7 @@
 const score = document.querySelector(".car-score");
 const startScreen = document.querySelector(".startScreen");
 const gameArea = document.querySelector(".gameArea");
+const endscreen=document.querySelector(".endscreen");
 
 console.log(gameArea);
 
@@ -18,6 +19,10 @@ let keys = {
   ArrowRight: false,
 };
 
+endscreen.addEventListener("click",()=>{
+  location.reload();
+})
+
 function keyDown(e) {
   keys[e.key] = true;
   // console.log(keys);
@@ -29,15 +34,15 @@ function keyUp(e) {
 //endgame
 function endgame() {
   players.start = false;
-  startScreen.classList.remove("hide");
+  endscreen.classList.remove("hide");
   gameArea.classList.add("hide");
   let audio = new Audio("gameover.mp3");
   audio.play();
-  startScreen.innerHTML =
+  endscreen.innerHTML =
     "game over   <br>" +
     "Your Final Score is : " +
     players.score +
-    " <br> refresh to start the game";
+    " <br> restart start the game";
 }
 // collision detection
 function collide(a, b) {
