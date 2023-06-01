@@ -130,6 +130,7 @@ class Enemy {
     this.x = CANVAS_WIDTH + Math.floor(Math.random() * 10 + 5);
     this.y = Math.random() * (CANVAS_HEIGHT - this.height);
     this.rate = Math.random();
+    this.id = "normal";
   }
   update() {
     // if(this.y + this.height > CANVAS_HEIGHT) this.y + this.height = CANVAS_HEIGHT;
@@ -153,10 +154,18 @@ class EnemyManager {
   spawn() {
     if (this.seed % this.rate === 0) {
       this.enemies = this.enemies.concat(
-        Array.from(
-          Array(5),
-          () => new Enemy(enemyImage, enemyWidth, enemyHeight, enemySpeed)
-        )
+        Array.from(Array(5), () => {
+          let randomno = Math.random();
+          if (randomno <= 0.5)
+            return new Enemy(enemyImage, enemyWidth, enemyHeight, enemySpeed);
+          else
+            return new IndestructibleEnemy(
+              enemyImageDeath,
+              enemyWidth,
+              enemyHeight,
+              enemySpeed + 1
+            );
+        })
       );
     }
     ++this.seed;
@@ -189,6 +198,12 @@ class EnemyManager {
         }
       }
     });
+  }
+}
+class IndestructibleEnemy extends Enemy {
+  constructor(enemyImage, enemyWidth, enemyHeight, enemySpeed) {
+    super(enemyImage, enemyWidth, enemyHeight, enemySpeed);
+    this.id = "indestructible";
   }
 }
 class Bullet {
@@ -259,18 +274,22 @@ class BulletManager {
       this.bullets.forEach((bullet) => {
         if (col.checkCollision(bullet, enemy, 0.5)) {
           //score increment
-          score += scoreValue * Math.floor(Math.random() * 5 + 1);
-          scoreDOM.innerHTML = score;
-          //bullet disappears
-          this.bullets.splice(this.bullets.indexOf(bullet), 1);
-          //enemy death
-          enemy.die();
-          if (enemy.rate > 0.2 && enemy.rate < 0.6) {
-            pickupManager.generatePickup(enemy.x, enemy.y, player);
+          if (enemy.id === "normal") {
+            score += scoreValue * Math.floor(Math.random() * 5 + 1);
+            scoreDOM.innerHTML = score;
+            //bullet disappears
+            this.bullets.splice(this.bullets.indexOf(bullet), 1);
+            //enemy death
+            enemy.die();
+            if (enemy.rate > 0.2 && enemy.rate < 0.6) {
+              pickupManager.generatePickup(enemy.x, enemy.y, player);
+            }
+            sleep(100).then(() => {
+              currentEnemies.splice(currentEnemies.indexOf(enemy), 1);
+            });
+          } else if (enemy.id === "indestructible") {
+            this.bullets.splice(this.bullets.indexOf(bullet), 1);
           }
-          sleep(100).then(() => {
-            currentEnemies.splice(currentEnemies.indexOf(enemy), 1);
-          });
         }
       });
     });
@@ -391,7 +410,7 @@ retryButton.addEventListener("click", () => {
   if (gameOver) {
     gameOverDOM.style.display = "none";
     gameDOM.style.display = "flex";
-    initializeGame()
+    initializeGame();
     // scoreManager = new ScoreManager()
     animate();
   }
@@ -445,7 +464,7 @@ startButtonDOM.addEventListener("click", () => {
   gameOverDOM.style.display = "none";
   startDOM.style.display = "none";
   gameDOM.style.display = "flex";
-  initializeGame()
+  initializeGame();
   gameOver = false;
   animate();
 });
