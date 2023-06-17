@@ -25,6 +25,7 @@ body {
     animation: slideIn 1s ease-in-out;
 }
 
+
 @keyframes slideIn {
     0% {
         transform: translateY(-20px);
@@ -78,7 +79,18 @@ h1 {
         transform: scale(1);
     }
 }
+h2{
+  margin-top: 1vw;
+    color: #FFD700;
+    font-size: 2.5rem;
+}
 
+.image{
+  width: 60px;
+  height: 60px;
+  margin-left: 10px;
+ 
+}
 .rows td {
     width: 9rem;
     height: 9rem;
@@ -187,4 +199,19 @@ h1 {
       transform: scale(1);
     }
   }
+
+
+
+
+.alert img{
+  width: 90px;
+  height: 90px;
+  margin-right: 10px;
+  cursor: pointer;
+}
+.alert img.selected{
+
+    border: 1px solid blue;
+  
+}
   
