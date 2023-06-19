@@ -1,0 +1,92 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap');
+
+*{
+    padding:0;
+    margin:0;
+
+}
+body{
+    background-image: url("../assets/bg.jpg");
+    background-repeat:no-repeat;
+    min-height:100vh;
+    background-size:105vw 100vh;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+
+}
+.main{
+    position: relative;
+}
+.board{
+    background:linear-gradient(rgb(235, 235, 131),rgb(169, 234, 169));
+    
+    width:46vw;
+    height:80vh;
+    display:grid;
+    grid-template-columns:repeat(18,1fr);
+    grid-template-rows:repeat(18,1fr);
+
+}
+
+.snake{
+    background:linear-gradient(yellow,green) ;
+    border-radius:12px;
+    border:2px solid black;
+    z-index:5;
+}
+.food{
+    background:linear-gradient(red,purple);
+    border:2px solid black;
+    border-radius:9px;
+    
+}
+.marks{
+    margin-left:5rem;
+    align-self:flex-start; 
+    margin-top:4rem;
+}
+ .score{
+   
+    align-self:flex-start;
+    font-size:1.8rem;
+    border:solid 0.2rem green;
+    border-radius:0.5rem;
+    padding:0.3rem;
+    font-family: 'Poppins', sans-serif;
+    margin-bottom:2rem;
+}
+.highscore{
+    align-self:flex-start;
+    font-size:1.8rem;
+    border:solid 0.2rem green;
+    border-radius:0.5rem;
+    padding:0.3rem;
+    font-family: 'Poppins', sans-serif;
+}
+.Gameover{
+    position:absolute;
+    left:22%;
+    top:35%; 
+    font-size:3rem;
+    border:0.2rem solid black; 
+    padding:2rem;
+    z-index:10;
+    text-align:center;
+    border-radius:6px;
+    background-color:rgb(60, 216, 60);
+    display:none;
+    color:white;
+}
+.Gameover > p{
+    font-size:3rem;
+}
+.Gameover > button{
+    background-color:rgb(13, 232, 13);
+    font-size:1.2rem;
+    border-radius:4px;
+    padding:0.3rem;
+    color:white;
+
+}
