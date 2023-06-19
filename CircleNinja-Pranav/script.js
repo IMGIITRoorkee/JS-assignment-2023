@@ -1,6 +1,7 @@
 let start_button = document.getElementsByClassName("start-game")[0];
 let how_to_button = document.getElementsByClassName("how-to-play")[0];
 let end_button = document.getElementsByClassName("end-game")[0];
+var cut_count_check = 0;
 end_button.ondragstart = function (){
     return false;
 }
@@ -22,45 +23,10 @@ function start_game() {
     document.body.style.backgroundColor = "white";
         generateCubes();
         setInterval(() => {
-            // for(let i = 0; i < cube.length; i ++){
-            //     cube[i].addEventListener("mouseover" , () => {
-            //         cube[i].setAttribute("hidden" , "hidden");
-            //     })
-            // }
             init();
-            setTimeout(() => {
-                gameEndCheck();
-            } , 3000);
-        } , 2000);
-
-
-    
-        
- 
-    // This works but as a mouse over event!
-    // Logic is that if the line's perpendicular distance frm the centrer is < a/rt2, its a cut.
-   
-   
-  
-
-   
+            gameEndCheck();
+        } , 1000);
 }
-
-
-
-// var time = 10;
-
-// function timerEndGame(){
-//     let x = document.getElementsByClassName("redirect-text")[0];
-//     const time_inti = setInterval(() => {
-//         time -= 1;
-//         x.innerHTML = `Youll be redirected to the home screen after ${time} secs`;
-//     }, 1000);
-//     if(time <= 0){
-//         clearInterval(time_inti);
-//         location.reload();
-//     }
-// }
 
 function end_game() {
     let hide_stuff = document.getElementsByClassName("bgs")[0];
@@ -72,90 +38,54 @@ function end_game() {
 
 var count = 0;
 
-var cube_circle = Math.random();
+
 
 function createCube() {
     count++;
-    // console.log("Count is: " + count);
     let x = document.createElement("div");
     let game_area = document.getElementsByClassName("game-canvas")[0];
     x.className = `cube-${count} cube`;
-    if(cube_circle >= 0.5){
-        x.style.borderRadius = "100%";
+    var index = Math.random();
+    if(count % 3 == 0){
+        x.style.backgroundColor = colors[0];
     }
     else{
-        x.style.borderRadius = "0%";
+        if(count % 2 == 0){
+            x.style.backgroundColor = colors[1];
+        }
+        else{
+            x.style.backgroundColor = colors[2];
+        }
     }
     let position_left = Math.random() * 1000;
     x.style.setProperty("--my-start-left" , (position_left + "px"));
     x.style.setProperty("--my-middle-left" , (position_left + 200 + "px"));
     x.style.setProperty("--my-end-left" , (position_left + 400 + "px"));
-    
     game_area.appendChild(x);
 }
-
-// function cubeHider(){
-//     for(let i = 1; i < count; i ++){
-//         let indi_cube = document.getElementsByClassName(`cube-${i}`)[0];
-//         console.log(indi_cube.offsetTop);
-//         if(indi_cube.offsetTop >= 550){
-//             indi_cube.style.display = "none";
-//         }
-//         else{
-//             indi_cube.style.display = "block";
-//         }
-//     }
-// }
 let cube = document.getElementsByClassName("cube");
 var cube_generate;
 function generateCubes(){
-    
-    
-        cube_generate = setInterval(() => {
-            createCube();
-            destroyCube();
-            // cubeHider();
-            // gameEndCheck();
-        } , 1000);
-        
+    cube_generate = setInterval(() => {
+        createCube();
+        destroyCube();
+    } , 1000);        
 }
 
-
 getComputedStyle(document.documentElement)
-    .getPropertyValue('--my-start-left'); // returns val
-
-
-
+    .getPropertyValue('--my-start-left'); 
 
 let game_area = document.getElementsByClassName("game-area")[0];
 let x_initial;
 let y_initial;
 let x_final;
 let y_final;
-// game_area.addEventListener("mousedown" , (e) => {
-//     console.log(e);
-//     x_initial = e.screenX;
-//     y_initial = e.screenY;
-//     console.log(x_initial);
-// })
-
-// game_area.addEventListener("mouseup" , (e) => {
-//     console.log("Final" + e);
-//     x_final = e.screenX;
-//     y_final = e.screenY;
-// })
-
-
 var cursorX;
 var cursorY;
 var canvas = document.getElementById("canvas"); //canvas, context, other vars etc
 var ctx = canvas.getContext("2d");
 var firstClick = [0,0];
 var intervalLoop = null;
-
-
-
-
 
 for(let i = 0; i < cube.length; i ++){
     cube.ondragstart = function () {
@@ -164,57 +94,50 @@ for(let i = 0; i < cube.length; i ++){
 }
 
 function gameEndCheck(){
-    for(let i = 1; i < count; i ++){
-        let indi_cube = document.getElementsByClassName(`cube-${i}`)[0];
-        indi_cube.addEventListener("animationend" , () =>{
-            if(!indi_cube.classList.contains("cut")){
-                game_end = 1;
-                // alert("Game finished");
-                let gameEnd = document.getElementsByClassName("game-end")[0];
-                gameEnd.removeAttribute("hidden");
-                let gameArea = document.getElementsByClassName("game-canvas")[0];
-                gameArea.setAttribute("hidden" , "hidden");
-                try{
-                    clearInterval(cube_generate);
+    try {
+        for(let i = 1; i < count; i ++){
+            let indi_cube = document.getElementsByClassName(`cube-${i}`)[0];
+            indi_cube.addEventListener("animationend" , () =>{
+                if(!indi_cube.classList.contains("cut")){
+                    game_end = 1;
+                    let gameEnd = document.getElementsByClassName("game-end")[0];
+                    gameEnd.removeAttribute("hidden");
+                    let x = document.getElementsByClassName('final-score')[0];
+                    x.innerHTML = `Your score was : ${score}`; 
+                    let gameArea = document.getElementsByClassName("game-canvas")[0];
+                    gameArea.setAttribute("hidden" , "hidden");
+                    try{
+                        clearInterval(cube_generate);
+                    }
+                    catch (error){
+                        console.log(error);
+                    }
                 }
-                catch (error){
-                    console.log(error);
-                }
-            }
-        })
-        
-
+            })
+        } 
+    } catch (error) {
+            console.log(error);
     }
 }
 
-
 function init() {
-    // document.onmousemove = function(e){
-    //     cursorX = e.pageX;
-    //     cursorY = e.pageY;
-    // };
-    // // console.log("X is " + cursorX);
-    // // console.log("Y is : " + cursorY);
-    // // if(cursorY < 60){
-    // //     stopDragLine();
-    // // }
-    // // else if(cursorX > 800){
-    // //     stopDragLine();
-    // // }
-    // canvas.addEventListener('mousedown', startDragLine, false);
-    // canvas.addEventListener('mouseup', stopDragLine, false);
+    document.onmousemove = function(e){
+        cursorX = e.pageX;
+        cursorY = e.pageY;
+    };
     let mouseX = 0;
     let mouseY = 0;
 let isMouseDown = false;
 ctx.clearRect(0, 0, canvas.width, canvas.height);
 canvas.addEventListener('mousedown', (event) => {
+    cut_count_check++;
   isMouseDown = true;
   mouseX = event.pageX - canvas.offsetLeft;
   mouseY = event.pageY - canvas.offsetTop;
   ctx.beginPath();
   ctx.moveTo(mouseX, mouseY); //go to initial
 });
-
+var pathPoints = [];
 canvas.addEventListener('mousemove', (event) => {
   if (isMouseDown) {
     //current pos
@@ -227,71 +150,87 @@ canvas.addEventListener('mousemove', (event) => {
     ctx.quadraticCurveTo(mouseX, mouseY, controlX, controlY);
     mouseX = currentX;
     mouseY = currentY;
+    pathPoints.push({ x: currentX, y: currentY });
+    ctx.strokeStyle = "red";
     ctx.stroke();
+    scoreUpdater();
+  }
+});
 
-    
+function calculateBoundingRect(points) {
+    let minX = Infinity;
+    let maxX = -Infinity;
+    let minY = Infinity;
+    let maxY = -Infinity;
+  
+    points.forEach((point) => {
+      minX = Math.min(minX, point.x);
+      maxX = Math.max(maxX, point.x);
+      minY = Math.min(minY, point.y);
+      maxY = Math.max(maxY, point.y);
+    });
+  
+    return {
+      left: minX,
+      top: minY,
+      right: maxX,
+      bottom: maxY,
+    };
   }
 
-});
-
 canvas.addEventListener('mouseup', () => {
-    // betterCollisionCheck();
-  isMouseDown = false;
-  ctx.clearRect(0, 0, canvas.width, canvas.height); // clear path
+    cut_count_check++;
+    
+    function checkCollision(rect1, rect2) {
+        return (
+          rect1.left < rect2.right &&
+          rect1.right > rect2.left &&
+          rect1.top < rect2.bottom &&
+          rect1.bottom > rect2.top
+        );
+      }
+    for(let i = 1; i < count; i ++){
+        let indi_cube = document.getElementsByClassName(`cube-${i}`)[0];
+        const pathRect = calculateBoundingRect(pathPoints);
+        if(checkCollision(indi_cube.getBoundingClientRect() , pathRect)){
+            indi_cube.classList.add("cut");
+            indi_cube.style.backgroundColor = 'red';
+        };
+    }
+    cut_count_check = 0;
+    isMouseDown = false;
+    ctx.clearRect(0, 0, canvas.width, canvas.height); // clear path
+    pathPoints.length = 0;
 });
-
-
 }
-
 let num = Math.random() * 4;
 var game_end = 0;
-// function gameEndCheck() {
-//     for(let i = 0; i < count1; i ++){
-//         if(!cube[i].classList.contains("cut")){
-//             game_end = 1;
-//             // alert("Game finished");
-//             let gameEnd = document.getElementsByClassName("game-end")[0];
-//             gameEnd.removeAttribute("hidden");
-//             let gameArea = document.getElementsByClassName("game-canvas")[0];
-//             gameArea.setAttribute("hidden" , "hidden");
-//         }
-//     }
-    
-// }
-
-
-
-
-
 
 function startDragLine(e) {
     firstClick = [e.pageX, e.pageY];
-    //start the loop
+    let audio = new Audio("./assets/sword.mp3");
+    audio.play();
     intervalLoop = setInterval(function(){
+        let audio = new Audio("./assets/sword.mp3");
+    audio.play();
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         ctx.beginPath();
         ctx.moveTo(firstClick[0], firstClick[1]);
         ctx.quadraticCurveTo(cursorX, cursorY, cursorX - 60 , cursorY - 60);
+        ctx.strokeStyle = "red";
         ctx.strokeStyle = '#000000';
         ctx.stroke();
     },10);
-    let audio = new Audio("./assets/sword.mp3");
-    audio.play();
+    
 }
 var count1 = 0;
 
 function stopDragLine(){
     count1++;
     clearInterval(intervalLoop);
-    
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    
-    // console.log(`X intiail is : ${firstClick[0]} and the final x is ${cursorX}`);
-    // This is problematic smwhere
-    for(let i = count1; i < count1 + 1; i ++){
-        
-        //(y1-x1)*slope = intercept
-       
+    scoreUpdater();
+    for(let i = count1; i < count1 + 1; i ++){       
         let x1 = firstClick[0];
         let x2 = cursorX;
         let y1 = firstClick[1];
@@ -300,95 +239,17 @@ function stopDragLine(){
         var c = (y1 - x1)*m;
         let indi_cube = document.getElementsByClassName(`cube-${i}`)[0];
         let rect = indi_cube.getBoundingClientRect();
-
-        // console.log(rect.top);
-        var cx = rect.left + 32;
-        var cy = rect.top + 32;
-        var r = 80;
-        // let y = m*x + c;
-        //mx0-y0+c/rt(m^2+1)
-        function lineCheck(x,y,r){
-            let distance = (m*x-y+c)/Math.sqrt(m*m + 1);
-            console.log(`Distance is : ${distance}`);
-            console.log(`Radius is ${r}`);
-            if(Math.abs(distance) <= 1.7*r){
-               
-                indi_cube.classList.add("cut");
-                score++;
-                let y = document.getElementsByClassName("final-score")[0];
-                y.ondragstart = function () {
-                    return false;
-                }
-                y.innerHTML = `Your score was ${score}`;
-                let x = document.getElementsByClassName("score")[0];
-                x.innerHTML = `Score : ${score}`;
-            }
-        }
-        
-        // lineCheck(cx,cy,r);
-        // betterCollisionCheck();
-    }   
-        
-       
+    }         
 }
-
-
-
-function betterCollisionCheck(){
-    for(let i = 1; i < count; i ++){
-        let indi_cube = document.getElementsByClassName(`cube-${i}`)[0];
-       
-       indi_cube.addEventListener("mouseover" , () => {
-        console.log("HIT");
-        indi_cube.classList.add("cut");
-        score+= 1;
-        let y = document.getElementsByClassName("final-score")[0];
-        y.ondragstart = function () {
-            return false;
-        }
-        y.innerHTML = `Your score was ${score}`;
-        let x = document.getElementsByClassName("score")[0];
-        x.innerHTML = `Score : ${score}`;
-       })
-            
-        }
-
-    }     
-    
 // }
-
-
-
-
-
 // Use the e.screenX and e.screenY to automatically trigger the mouseup event (i.e fire that corresponding fn.. otherwise leads to bugs)
-
-
-
-
 
 function destroyCube(){
     for(let i = 1; i < count; i ++){
-    //    let x = document.getElementsByClassName(`cube-${i}`);
-    //    try {
-    //     console.log(x);
-    //     x[0].addEventListener("animationend" , () => {
-    //      x[0].classList.add = "dead";
-    //         x[0].remove();
-    //     })
-    //    } catch (error) {
-    //     console.log("That cube was dead");
-    //    }
-        // cube[i].addEventListener("animationend" , () => {
-        //     cube[i].remove();
-        //     console.log("Animation end for cube " + i);
-        // })
-        // console.log(cube);
         let indi_cube = document.getElementsByClassName(`cube-${i}`)[0];
         indi_cube.addEventListener("animationend" , () => {
             indi_cube.style.display = "none";
         })
-        // console.log(indi_cube);
 
     }
 }
@@ -422,45 +283,64 @@ function destoryCubeRemove(){
         let x = document.getElementsByClassName(`cube`)[i];
         try {
             x.remove();
-            // console.log(cube);
         } catch (error) {
             x.classList.remove(`cube cube-${i}`)
             console.log("Cube was already removed!");
         }
     }
-    cube[0].remove();
-    cube[0].remove();
+    // cube[0].remove();
+    // cube[0].remove();
+    try {
+        cube[0].remove();
+        cube[0].remove();
+    } catch (error) {
+        console.log(error);
+    }
 }
 let start_game_again = document.getElementsByClassName("start-game-again")[0];
 start_game_again.addEventListener("click" , () => {
-   
     try{    
-       
-        // let x = document.getElementsByClassName("game-end")[0];
-        // x.setAttribute("hidden" , "hidden");
-        // let y = document.getElementsByClassName("game-canvas")[0];
-        // y.removeAttribute("hidden");
-        // destroyCube();
         
+        let score = document.getElementsByClassName('score')[0];
+        score.innerHTML = `Score : 0`;
+        destoryCubeRemove();
         count = 0;
         count1 = 0;
-        destoryCubeRemove();
+        score = 0;
         stopDragLine();
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-    //    setTimeout(() => {
-    //     start_game();
-    //    } , 3000);
-    start_game();
+        start_game();
     }
     catch(e){
+        score = 0;
+        
+        let score_text = document.getElementsByClassName('score')[0];
+        score_text.innerHTML = `Score : 0`;
+        destoryCubeRemove();
+        count = 0;
+        count1 = 0;
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         setTimeout(() => {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             start_game();
-        } , 10);
-        
+        } , 10);   
     }
-    
-
-
 })
+// Write a better collision check for the ball and the cut.. the present one is not working perfectly every time
+function scoreUpdater(){
+    for(let i = 1; i < count; i ++){
+        let indi_cube = document.getElementsByClassName(`cube-${i}`)[0];
+        if(indi_cube.classList.contains('cut') && !indi_cube.classList.contains('sadded')){
+            score++;
+            indi_cube.classList.add('sadded');
+            console.log("The score is : " + score);
+            let x = document.getElementsByClassName("score")[0];
+            x.innerText = `Score : ${score}`;
+        }
+
+    }
+}
+
+var colors = ["#2ECC71" , "#FBFCFC" , "#2E86C1"];
+
+
