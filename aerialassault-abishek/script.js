@@ -156,7 +156,7 @@ class EnemyManager {
     this.enemies = [];
   }
   spawn() {
-    if(score % 1000 === 0) speedMultiplier += 0.02
+    if(score % 1000 === 0) speedMultiplier += 0.002
     if (this.seed % this.rate === 0) {
       this.enemies = this.enemies.concat(
         Array.from(Array(5), () => {
