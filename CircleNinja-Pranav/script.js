@@ -14,7 +14,7 @@ end_button.addEventListener("click" , () => {
 })
 
 var score = 0;
-
+var lives_number = 3;
 function start_game() {
     let hide_stuff = document.getElementsByClassName("bgs")[0];
     let game_area = document.getElementsByClassName("game-canvas")[0];
@@ -98,23 +98,29 @@ function gameEndCheck(){
         for(let i = 1; i < count; i ++){
             let indi_cube = document.getElementsByClassName(`cube-${i}`)[0];
             indi_cube.addEventListener("animationend" , () =>{
-                if(!indi_cube.classList.contains("cut")){
-                    game_end = 1;
-                    let gameEnd = document.getElementsByClassName("game-end")[0];
-                    gameEnd.removeAttribute("hidden");
-                    let x = document.getElementsByClassName('final-score')[0];
-                    x.innerHTML = `Your score was : ${score}`; 
-                    let gameArea = document.getElementsByClassName("game-canvas")[0];
-                    gameArea.setAttribute("hidden" , "hidden");
-                    try{
-                        clearInterval(cube_generate);
-                    }
-                    catch (error){
-                        console.log(error);
-                    }
+                if(!indi_cube.classList.contains("cut") && !indi_cube.classList.contains('liveadded')){
+                    lives_number -- ;
+                    indi_cube.classList.add('liveadded');
+                    let lives = document.getElementsByClassName("lives")[0];
+                    lives.innerHTML = `Lives Remaining : ${lives_number}`;
                 }
             })
         } 
+        if(lives_number <= 0){
+            game_end = 1;
+            let gameEnd = document.getElementsByClassName("game-end")[0];
+            gameEnd.removeAttribute("hidden");
+            let x = document.getElementsByClassName('final-score')[0];
+            x.innerHTML = `Your score was : ${score}`; 
+            let gameArea = document.getElementsByClassName("game-canvas")[0];
+            gameArea.setAttribute("hidden" , "hidden");
+            try{
+                clearInterval(cube_generate);
+            }
+            catch (error){
+                console.log(error);
+            }
+        }
     } catch (error) {
             console.log(error);
     }
@@ -154,7 +160,9 @@ canvas.addEventListener('mousemove', (event) => {
     ctx.strokeStyle = "red";
     ctx.stroke();
     scoreUpdater();
+
   }
+
 });
 
 function calculateBoundingRect(points) {
@@ -194,8 +202,27 @@ canvas.addEventListener('mouseup', () => {
         const pathRect = calculateBoundingRect(pathPoints);
         if(checkCollision(indi_cube.getBoundingClientRect() , pathRect)){
             indi_cube.classList.add("cut");
-            indi_cube.style.backgroundColor = 'red';
         };
+        // let rect = indi_cube.getBoundingClientRect();
+        // let y = rect.top;
+        // let x = rect.left;
+          
+        // for(let i = 0; i < pathPoints.length; i++){
+        //     let item = pathPoints[i];
+        //     let x_check = x - item.x;
+        //     let y_check = y - item.y;
+        //     if(x_check < 0){
+        //         x_check = -1 * x_check;
+        //     }
+        //     if(y_check < 0){
+        //         y_check = -1 * y_check;
+        //     }
+        //     console.log("X check is" + x_check);
+        //     console.log("Y check is" + y_check);
+        //     if(x_check < 120 && y_check< 20){
+        //         indi_cube.classList.add('cut');
+        //     }
+        // }
     }
     cut_count_check = 0;
     isMouseDown = false;
@@ -307,13 +334,18 @@ start_game_again.addEventListener("click" , () => {
         count = 0;
         count1 = 0;
         score = 0;
+        lives_number = 3;
+        let lives = document.getElementsByClassName('lives')[0];
+        lives.innerHTML = `Lives Remaining : ${lives_number}`;
         stopDragLine();
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         start_game();
     }
     catch(e){
         score = 0;
-        
+        lives_number = 3;
+        let lives = document.getElementsByClassName('lives')[0];
+        lives.innerHTML = `Lives Remaining : ${lives_number}`;
         let score_text = document.getElementsByClassName('score')[0];
         score_text.innerHTML = `Score : 0`;
         destoryCubeRemove();
