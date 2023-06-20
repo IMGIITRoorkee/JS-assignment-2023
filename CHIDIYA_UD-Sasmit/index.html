@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>chidiya_udd</title>
+    <link rel="stylesheet" href="main.css">
+</head>
+<body>
+    <div class="container1 container" id="container1">
+        <img src="background1.png" id="bgd1" class="bgd">
+        <div>
+            <label for="nop" id="nope">No of players:</label>
+            <select name="nofp" id="nop">
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+            </select>
+            <button id="rules" onclick="change1()">RULES</button>
+            <button id="start" onclick="change2()">START</button>
+        </div>
+        
+    </div>
+    <div class="container2 container" id="container2">
+        <button id="begin" onclick="back()">X</button>
+        <div class="containerr">
+        <h1>RULES</h1>
+        <div class="rulestext">
+            <div id="r1">1. Players will be presented with images which may fly or not.</div>
+            <div id="r2">2. Players have to press the corresponding key if it can fly. Otherwise they must not press any key during the time interval.</div>
+            <div id="r3">3. The time interval will gradually keep decreasing.</div>
+            <div id="r4">4. Each right answer will give +10 points and each wrong answer will give -5 points.</div>
+            <div id="r5">5. The player who reaches 150 points first will be the winner.</div>
+        </div>
+        
+        <div class="keys"><div id="keys">KEYS</div>
+            <div id="p1key">PLAYER1 : Q</div>
+            <div id="p2key">PLAYER2 : C</div>
+            <div id="p3key">PLAYER3 : M</div>
+            <div id="p4key">PLAYER4 : P</div>
+        </div>
+    </div>
+        
+        
+        
+    </div>
+    <div class="container3 container" id="container3">
+        <div class="containerscore">
+        <div id="player1s">PLAYER 1(Q) : <div id="p1s">0</div></div>
+        <div id="player2s">PLAYER 2(C) : <div id="p2s">0</div></div>
+        <div id="player3s">PLAYER 3(M) : <div id="p3s">0</div></div>
+        <div id="player4s">PLAYER 4(P) : <div id="p4s">0</div></div>
+        </div>
+        <img src="rsg.png" id="ques">
+    </div>
+    <div class="container4 container" id="container4">
+        <div id="eliminate">SCORES</div>
+        <div id="player1">PLAYER 1 : <div id="p5s">0</div></div>
+        <div id="player2">PLAYER 2 : <div id="p6s">0</div></div>
+        <div id="player3">PLAYER 3 : <div id="p7s">0</div></div>
+        <div id="player4">PLAYER 4 : <div id="p8s">0</div></div>
+        <button id="continue" onclick="change4()" >CONTINUE</button>
+    </div>
+        <div class="container5 container" id="container5">
+            <div id="none">ITS A DRAW</div>
+            <div id="p1win">PLAYER 1 HAS WON THE GAME</div>
+            <div id="p2win">PLAYER 2 HAS WON THE GAME</div>
+            <div id="p3win">PLAYER 3 HAS WON THE GAME</div>
+            <div id="p4win">PLAYER 4 HAS WON THE GAME</div>
+        <button id="restart" onclick="change5()">RESTART</button>
+        </div>
+</body>
+<script src="script.js"></script>
+</html>
