@@ -190,39 +190,43 @@ canvas.addEventListener('mouseup', () => {
     cut_count_check++;
     
     function checkCollision(rect1, rect2) {
-        return (
-          rect1.left < rect2.right &&
-          rect1.right > rect2.left &&
-          rect1.top < rect2.bottom &&
-          rect1.bottom > rect2.top
-        );
+        let temp = rect2.top - rect2.bottom;
+        console.log(rect2.top - rect2.bottom);
+       if(temp < 0){
+        temp *= -1;
+       }
+        if(temp <= 10){
+            if(rect1.top > rect2.bottom){
+                return (
+                    rect1.left < rect2.right &&
+                    rect1.right > rect2.left
+                );
+            }
+            else{
+                return false;
+            }
+            
+        }
+        else{
+            return (
+                rect1.left < rect2.right &&
+                rect1.right > rect2.left &&
+                rect1.top < rect2.bottom &&
+                rect1.bottom > rect2.top
+              );
+        }
+        
+
+
       }
+    
     for(let i = 1; i < count; i ++){
         let indi_cube = document.getElementsByClassName(`cube-${i}`)[0];
         const pathRect = calculateBoundingRect(pathPoints);
         if(checkCollision(indi_cube.getBoundingClientRect() , pathRect)){
             indi_cube.classList.add("cut");
+            indi_cube.style.backgroundColor = 'red';
         };
-        // let rect = indi_cube.getBoundingClientRect();
-        // let y = rect.top;
-        // let x = rect.left;
-          
-        // for(let i = 0; i < pathPoints.length; i++){
-        //     let item = pathPoints[i];
-        //     let x_check = x - item.x;
-        //     let y_check = y - item.y;
-        //     if(x_check < 0){
-        //         x_check = -1 * x_check;
-        //     }
-        //     if(y_check < 0){
-        //         y_check = -1 * y_check;
-        //     }
-        //     console.log("X check is" + x_check);
-        //     console.log("Y check is" + y_check);
-        //     if(x_check < 120 && y_check< 20){
-        //         indi_cube.classList.add('cut');
-        //     }
-        // }
     }
     cut_count_check = 0;
     isMouseDown = false;
@@ -372,7 +376,4 @@ function scoreUpdater(){
 
     }
 }
-
 var colors = ["#2ECC71" , "#FBFCFC" , "#2E86C1"];
-
-
