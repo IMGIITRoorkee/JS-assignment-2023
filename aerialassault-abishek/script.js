@@ -156,7 +156,7 @@ class EnemyManager {
     this.enemies = [];
   }
   spawn() {
-    if(score % 1000 === 0) speedMultiplier += 0.002
+    if(score % 1000 === 0) speedMultiplier += 0.001
     if (this.seed % this.rate === 0) {
       this.enemies = this.enemies.concat(
         Array.from(Array(5), () => {
@@ -281,7 +281,6 @@ class BulletManager {
           //score increment
           if (enemy.id === "normal") {
             score += scoreValue * Math.floor(Math.random() * 5 + 1);
-            scoreDOM.innerHTML = score;
             //bullet disappears
             this.bullets.splice(this.bullets.indexOf(bullet), 1);
             //enemy death
@@ -297,6 +296,7 @@ class BulletManager {
           }
         }
       });
+      scoreDOM.innerHTML = score;
     });
   }
 }
@@ -416,6 +416,7 @@ let bulletManager = new BulletManager(player);
 let pickupManager = new PickupManager(timeout);
 // let scoreManager = new ScoreManager()
 const initializeGame = () => {
+  score = 0;
   bgm.load();
   bgm.volume = 0.1;
   bgm.playbackRate = 1.25;
