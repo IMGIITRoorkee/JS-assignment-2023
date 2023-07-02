@@ -14,6 +14,7 @@ body{
     /* border-radius: 100%; */
     background-color: rebeccapurple;
     animation: bring_into_view 3s;
+    
 }
 
 .game-area{

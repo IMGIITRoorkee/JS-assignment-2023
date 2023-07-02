@@ -118,11 +118,11 @@ function gameEndCheck(){
                 clearInterval(cube_generate);
             }
             catch (error){
-                console.log(error);
+                // console.log(error);
             }
         }
     } catch (error) {
-            console.log(error);
+            // console.log(error);
     }
 }
 
@@ -185,18 +185,18 @@ function calculateBoundingRect(points) {
       bottom: maxY,
     };
   }
-
+var result;
 canvas.addEventListener('mouseup', () => {
     cut_count_check++;
     
     function checkCollision(rect1, rect2) {
         let temp = rect2.top - rect2.bottom;
-        console.log(rect2.top - rect2.bottom);
        if(temp < 0){
         temp *= -1;
        }
-        if(temp <= 10){
-            if(rect1.top > rect2.bottom){
+        if(temp <= 30){
+            result = rect1.top - rect2.bottom;
+            if(rect1.bottom > rect2.top && rect1.top > rect2.top){
                 return (
                     rect1.left < rect2.right &&
                     rect1.right > rect2.left
@@ -215,10 +215,12 @@ canvas.addEventListener('mouseup', () => {
                 rect1.bottom > rect2.top
               );
         }
+
+    
         
 
 
-      }
+}
     
     for(let i = 1; i < count; i ++){
         let indi_cube = document.getElementsByClassName(`cube-${i}`)[0];
@@ -226,7 +228,10 @@ canvas.addEventListener('mouseup', () => {
         if(checkCollision(indi_cube.getBoundingClientRect() , pathRect)){
             indi_cube.classList.add("cut");
             indi_cube.style.backgroundColor = 'red';
-        };
+        }
+        else{
+            // console.log("result : " + result);
+        }
     }
     cut_count_check = 0;
     isMouseDown = false;
@@ -309,14 +314,13 @@ x.addEventListener("click" , () => {
 })
 
 function destoryCubeRemove(){
-    console.log(cube);
+    // console.log(cube);
     for(let i = 0; i < cube.length; i ++){
         let x = document.getElementsByClassName(`cube`)[i];
         try {
             x.remove();
         } catch (error) {
             x.classList.remove(`cube cube-${i}`)
-            console.log("Cube was already removed!");
         }
     }
     // cube[0].remove();
@@ -325,7 +329,7 @@ function destoryCubeRemove(){
         cube[0].remove();
         cube[0].remove();
     } catch (error) {
-        console.log(error);
+       
     }
 }
 let start_game_again = document.getElementsByClassName("start-game-again")[0];
@@ -369,7 +373,7 @@ function scoreUpdater(){
         if(indi_cube.classList.contains('cut') && !indi_cube.classList.contains('sadded')){
             score++;
             indi_cube.classList.add('sadded');
-            console.log("The score is : " + score);
+           
             let x = document.getElementsByClassName("score")[0];
             x.innerText = `Score : ${score}`;
         }
