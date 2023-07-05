@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Impossible Mario</title>
+    <link rel="stylesheet" href="./index.css">
+    <style>
+        body{
+          background-color:#000;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          height: 100vh;
+        }
+    </style>
+</head>
+<body onkeypress="onEnterKey(event)">
+    <div class="container">
+        <img src="./game-assets/death.gif" />
+        <img src="./game-assets/retry.png" style="
+            padding-right: 4rem;
+            padding-top: 3rem;
+            cursor: pointer;
+            "
+            
+            onclick="onRetryCLick()"
+            
+        />
+        <audio autoplay loop="false" src="./game-assets/death.mp3" ></audio>
+        
+    </div>
+    <script>
+        onRetryCLick =() =>{
+            window.location.href = "/JS-assignment-2023/index.html"
+        }
+        onEnterKey =(event)=>{
+            if(event.key === 'Enter'){
+                window.location.href = "/JS-assignment-2023/index.html"
+            }   
+        }
+    </script>
+</body>
+</html>
