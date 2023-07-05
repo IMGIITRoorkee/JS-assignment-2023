@@ -425,6 +425,7 @@ end_button.addEventListener("click" , () => {
 
 var score = 0;
 var lives_number = 3;
+
 function start_game() {
     let hide_stuff = document.getElementsByClassName("bgs")[0];
     let game_area = document.getElementsByClassName("game-canvas")[0];
@@ -790,4 +791,5 @@ function scoreUpdater(){
 
     }
 }
+
 var colors = ["#2ECC71" , "#FBFCFC" , "#2E86C1"];
