@@ -1,0 +1,86 @@
+*{
+    margin: 0;padding: 0;
+}
+.main-page{
+    height: 100vh;
+    background-image: url("../Assets/snake-game-main-page.webp");
+    background-size: cover;
+    background-position-x: center;
+    background-repeat: no-repeat;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* justify-content: fi; */
+    gap: 2rem;
+}
+
+@keyframes text-fade {
+    0%  {opacity: 100%;}
+    20% { opacity: 95%;}
+    100% { opacity: 0%;}
+}
+
+.content-upper{
+    margin-top: 20rem;
+    color: white;
+    font-size: 2rem;
+    text-align: center;
+    /* margin-bottom: 13rem; */
+    animation-name: text-fade;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+
+}
+
+.content-middle{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: -9rem !important;
+    width: 100%;
+}
+
+.buttons{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 18%;
+    font-size: 8px;
+    /* margin-left: 31%; */
+}
+
+.button{
+    --bs-btn-padding-y: 1.25em !important;
+    --bs-btn-padding-x: 3em !important;
+    --bs-btn-font-size: 3.5em !important;
+    border-radius: 3rem !important;
+}
+
+.content-lower{
+    margin-top: 10rem;
+}
+
+#instructions{
+    display: none;
+    flex-direction: column;
+    width: 20rem;
+    color: white;
+    /* margin-right: 10rem; */
+    border: 1px solid whitesmoke;
+    padding: 1rem;
+    padding-left: 0.5rem;
+}
+
+.instruction-heading{
+    text-decoration: underline;
+}
+
+.instruction-list{
+    margin: 0;
+    padding: 0;
+    list-style-position: inside;
+}
+
+
+
